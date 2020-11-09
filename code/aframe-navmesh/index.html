@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Hello, WebVR! • A-Frame</title>
+    <meta name="description" content="Hello, WebVR! • A-Frame" />
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+  </head>
+  <body>
+    <a-scene inspector-plugin-recast background="color: #FAFAFA" >
+      <a-assets>
+        <a-asset-item
+          id="navmesh"
+          src="https://cdn.glitch.com/bdbeea0a-5867-4843-a056-3350ba567fbf%2Fnavmesh%20(1).gltf?v=1604919383068"
+        ></a-asset-item>
+      </a-assets>
+
+      <a-entity
+        id="rig"
+        position="0 0 -1.5"
+        movement-controls="constrainToNavMesh: true"
+      >
+        <a-entity
+          camera
+          position="0 1.6 0"
+          camera
+          look-controls="pointerLockEnabled: false"
+        >
+        </a-entity>
+      </a-entity>
+
+      <a-box
+        position="-1 0.5 -3"
+        rotation="0 45 0"
+        color="#4CC3D9"
+        shadow
+      ></a-box>
+      <a-sphere
+        position="0 1.25 -5"
+        radius="1.25"
+        color="#EF2D5E"
+        shadow
+      ></a-sphere>
+      <a-cylinder
+        position="1 0.75 -3"
+        radius="0.5"
+        height="1.5"
+        color="#FFC65D"
+        shadow
+      ></a-cylinder>
+      <a-plane
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="12"
+        height="12"
+        color="#7BC8A4"
+        shadow
+      ></a-plane>
+
+      <a-entity gltf-model="#navmesh" nav-mesh visible="false" ></a-entity>
+      
+    </a-scene>
+  </body>
+</html>

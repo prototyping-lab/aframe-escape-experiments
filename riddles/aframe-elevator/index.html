@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Hello, WebVR! • A-Frame</title>
+    <meta name="description" content="Hello, WebVR! • A-Frame" />
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+  </head>
+  <body>
+    <a-scene inspector-plugin-recast background="color: #FAFAFA">
+      <a-assets>
+        <a-asset-item
+          id="navmesh"
+          src="https://cdn.glitch.com/8aa13f71-1aa1-4972-8c4e-71fa71761c71%2Fnavmesh%20(3).gltf?v=1604926323263"
+        ></a-asset-item>
+      </a-assets>
+
+      <a-entity
+        id="rig"
+        position="0 0 -1.5"
+        movement-controls="constrainToNavMesh: true"
+      >
+        <a-entity
+          camera
+          position="0 1.6 0"
+          camera
+          look-controls="pointerLockEnabled: true"
+        >
+        </a-entity>
+      </a-entity>
+
+      <a-entity position="0 1.5 -7" id="Fahrstuhl">
+        <!--wände-->
+        <a-box color="tomato" scale="2 4 0.2" position="0 0 -1"></a-box>
+        <a-box color="tomato" scale="0.2 4 2.2" position="-1 0 0"></a-box>
+        <a-box color="tomato" scale="0.2 4 2.2" position="1 0 0"></a-box>
+        <a-box color="tomato" scale="2.2 0.2 2.2" position="0 2 0"></a-box>
+        <!--buttons-->
+        <a-entity position="0 0 -0.9">
+        <a-box color="gray" scale="0.1 0.1 0.1" position="0 0.9 0"></a-box>
+        <a-box color="gray" scale="0.1 0.1 0.1" position="0 0.6 0"></a-box>
+        <a-box color="gray" scale="0.1 0.1 0.1" position="0 0.3 0"></a-box>
+        <a-box color="gray" scale="0.1 0.1 0.1" position="0 0 0"></a-box>
+        <a-box color="darkgray" scale="0.1 0.1 0.1" position="0 -0.3 0"></a-box>
+        <a-box color="gray" scale="0.1 0.1 0.1" position="0 -0.6 0"></a-box>
+        </a-entity>
+
+      </a-entity>
+
+      <a-plane
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="12"
+        height="12"
+        color="#7BC8A4"
+        shadow
+      ></a-plane>
+
+      <a-entity gltf-model="#navmesh" nav-mesh visible="false"></a-entity>
+    </a-scene>
+  </body>
+</html>
