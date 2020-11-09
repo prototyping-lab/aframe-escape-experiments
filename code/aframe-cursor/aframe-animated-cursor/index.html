@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>A-Frame Animated Cursor</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <style>
+      
+
+      #cursor {
+        cursor: none;
+        position: absolute;
+        z-index: 10000;
+        width: 40px;
+        height: 40px;
+        background: transparent url(https://cdn.glitch.com/dbb681c2-513a-42eb-9b0e-caedbf82a6d5%2Fcrosshair.gif?v=1604927498406) 0 0 no-repeat;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <a-scene background="color: #FAFAFA">
+      <a-box
+        position="-1 0.5 -3"
+        rotation="0 45 0"
+        color="#4CC3D9"
+        shadow
+      ></a-box>
+      <a-sphere
+        position="0 1.25 -5"
+        radius="1.25"
+        color="#EF2D5E"
+        shadow
+      ></a-sphere>
+      <a-cylinder
+        position="1 0.75 -3"
+        radius="0.5"
+        height="1.5"
+        color="#FFC65D"
+        shadow
+      ></a-cylinder>
+      <a-plane
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="4"
+        height="4"
+        color="#7BC8A4"
+        shadow
+      ></a-plane>
+    </a-scene>
+    <div id="cursor">
+</div>
+    <script>
+      // Set the offset so the the mouse pointer matches your gif's pointer
+      var cursorOffset = {
+        left: 11,
+        top: 9
+      };
+
+      document.body.addEventListener(
+        "mousemove",
+        function(e) {
+          var $cursor = document.getElementById("cursor");
+          $cursor.style.left = e.pageX - cursorOffset.left + "px";
+          $cursor.style.top = e.pageY - cursorOffset.top + "px";
+        },
+        false
+      );
+      
+    </script>
+  </body>
+</html>
