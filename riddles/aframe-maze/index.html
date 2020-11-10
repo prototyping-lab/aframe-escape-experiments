@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Hello, WebVR! • A-Frame</title>
+    <meta name="description" content="Hello, WebVR! • A-Frame" />
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-svg-extruder@1.0.0/dist/index.min.js"></script>
+  </head>
+  <body>
+    <a-scene inspector-plugin-recast background="color: #FAFAFA">
+      <a-assets>
+        <a-asset-item id="navmesh" src="navmesh.gltf"></a-asset-item>
+        <a-asset-item id="maze" src="test.svg"></a-asset-item>
+        <a-asset-item id="raum" src="test_raum.gltf"></a-asset-item>
+      </a-assets>
+
+      
+ 
+      <a-entity
+        id="rig"
+        position="-19d 0 -10"
+        rotation="0 -90 0"
+        movement-controls="constrainToNavMesh: true"
+      >
+        <a-entity
+          camera
+          position="0 1.6 0"
+          camera
+          look-controls="pointerLockEnabled: true"
+        >
+        </a-entity>
+      </a-entity>
+      
+
+
+      <a-svg
+      src="#maze"
+      proportional-scale="1"
+      rotation="-90 0 0"
+      rotate="0 0 0"
+      extrude="0.5"
+      z-factor="0"
+      scale="3 3 12"
+      position="1 0 -1"
+    >
+    </a-svg> 
+
+<a-plane position="1.35446 -0.25987 -10.90218" rotation="-59.33035264359187 90.00021045914971 -90.00021045914971" width="8" height="3" color="tomato" shadow="" material="side: double" geometry="" scale="1.59 1 1"></a-plane>
+<a-plane position="-6.07231 2.98796 -20.26092" rotation="-90.00021045914971 -90 0" width="8" height="3" color="tomato" shadow="" material="side: double" geometry="" scale="1.59 1 1"></a-plane>
+<a-box color="blue" scale="2.5 0.5 2.5" position="9 0 -4" material="" geometry=""></a-box>
+<a-box color="tomato" scale="2.5 0.5 2.5" position="16.08782 0 -13.67546" material="" geometry=""></a-box>
+<a-box color="blue" scale="3 3 2" position="-4.70734 0.88588 -20.93884" material="" geometry=""></a-box>
+
+    <!--
+     <a-entity gltf-model="#raum"></a-entity>
+  -->
+
+      <a-plane
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="100"
+        height="100"
+        color="#7BC8A4"
+        shadow
+      ></a-plane>
+
+      <!--plane
+      
+
+
+      -->
+
+      <a-entity gltf-model="#navmesh" nav-mesh visible="false"></a-entity>
+    </a-scene>
+  </body>
+</html>
