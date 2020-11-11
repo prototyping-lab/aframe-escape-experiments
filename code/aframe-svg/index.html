@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Hello, WebVR! • A-Frame</title>
+    <meta name="description" content="Hello, WebVR! • A-Frame" />
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-svg-extruder@1.0.0/dist/index.min.js"></script>
+    <script src="https://unpkg.com/aframe-csg-meshs/index.js"></script>
+  </head>
+  <body>
+    <a-scene inspector-plugin-recast background="color: #FAFAFA">
+      <a-assets>
+
+        <a-asset-item id="saeulen" src="saeulen.svg"></a-asset-item>
+        <a-asset-item id="dach" src="dach.svg"></a-asset-item>
+        <a-asset-item id="cut" src="cut.svg"></a-asset-item>
+        <a-asset-item id="raum" src="file.gltf"></a-asset-item>
+        <a-asset-item id="navmesh" src="navmesh.gltf"></a-asset-item>
+      </a-assets>
+
+      
+      <a-entity
+        id="rig"
+        position="3 0 12"
+        rotation="0 0 0"
+        movement-controls="constrainToNavMesh: true"
+      >
+        <a-entity
+          camera
+          position="0 1.6 0"
+          camera
+          look-controls="pointerLockEnabled: true"
+        >
+        </a-entity>
+      </a-entity>
+      
+      <!--
+
+        <a-svg src="#saeulen" proportional-scale="1" rotation="-90 0 0" rotate="0 0 0" extrude="0.5" z-factor="0" scale="3 3 18" position="1 0 3.49553" svg="zFactor: 0.001" csg-meshs="subtract: #sphere">
+        </a-svg>
+
+        <a-svg src="#dach" proportional-scale="1" rotation="-90 0 0" rotate="0 0 0" extrude="0.5" z-factor="0" scale="3 3 12" position="1 4 1.10691" svg="zFactor: 0.001" csg-meshs="intersect: #dach2">
+        </a-svg>
+
+        <a-box id="sphere" position="4.93837 1.41469 -1.93626" radius="1.25" color="blue" material="transparent: true; opacity: 0" geometry="" rotation="0 -70 0" scale="4.41 1 1"></a-box>
+        <a-box id="sphere" position="6.71554 1.41469 -4.28954" radius="1.25" color="blue" material="transparent: true; opacity: 0" geometry="" rotation="0 -29.999999999999996 0" scale="4.41 1 1"></a-box>
+        <a-box id="sphere" position="-6.04127 1.84222 -3.62219" radius="1.25" color="blue" material="transparent: true; opacity: 0" geometry="" rotation="-0.02 29.999999999999996 0" scale="4.41 1 1"></a-box>
+        <a-box id="sphere" position="-3.68982 1.6478 -1.93626" radius="1.25" color="blue" material="transparent: true; opacity: 0" geometry="" rotation="0 50 0" scale="4.41 1 1"></a-box>
+        <a-box id="sphere" position="-3.68982 1.6478 -12.70674" radius="1.25" color="blue" material="transparent: true; opacity: 0" geometry="" rotation="0 134.34714380227544 0" scale="4.41 1 1"></a-box>
+        <a-box id="sphere" position="-6.61407 1.84222 -9.50532" radius="1.25" color="blue" material="transparent: true; opacity: 0" geometry="" rotation="-0.020053522829578813 -4.451309110371366 0" scale="4.41 1 1"></a-box>
+        <a-box id="sphere" position="7.79833 1.41469 -11.24963" radius="1.25" color="blue" material="transparent: true; opacity: 0" geometry="" rotation="0 37.87881279389385 0" scale="4.41 1 1"></a-box>
+        <a-box id="sphere" position="4.7615 1.41469 -13.27626" radius="1.25" color="blue" material="transparent: true; opacity: 0" geometry="" rotation="0 -107.09326036128756 0" scale="4.41 1 1"></a-box>
+
+    -->
+
+     <a-entity gltf-model="#raum"></a-entity>
+
+      <a-plane
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="100"
+        height="100"
+        color="#7BC8A4"
+        shadow
+      ></a-plane>
+
+      <a-entity gltf-model="#navmesh" nav-mesh visible="false"></a-entity>
+    </a-scene>
+  </body>
+</html>
