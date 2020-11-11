@@ -7,9 +7,7 @@
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
   </head>
   <body>
-
     <a-scene background="color: #FAFAFA" debug>
-
       <a-assets>
         <a-mixin
           id="hilite"
@@ -64,31 +62,35 @@
         color="#7BC8A4"
         shadow
       ></a-plane>
-
     </a-scene>
-    
+
     <script>
-      let box = document
+
+      // add an event listener to the box
+      document
         .querySelector("#my-box")
         .addEventListener("click", function (evt) {
           console.log(evt.target.id, "clicked");
           toggleMixin(evt.target, "hilite");
         });
 
-      let sphere = document
+      // add an event listener to the sphere
+      document
         .querySelector("#my-sphere")
         .addEventListener("click", function (evt) {
           console.log(evt.target.id, "clicked");
           toggleMixin(evt.target, "hilite");
         });
 
-      let cylinder = document
+      // add an event listener to the cylinder
+      document
         .querySelector("#my-cylinder")
         .addEventListener("click", function (evt) {
           console.log(evt.target.id, "clicked");
           toggleMixin(evt.target, "hilite");
         });
 
+      // add or remove mixin on the fly
       function toggleMixin(el, mixin) {
         if (el.getAttribute("mixin") === mixin) {
           el.removeAttribute("mixin");
@@ -97,6 +99,7 @@
           console.log(mixin);
         }
       }
+
     </script>
   </body>
 </html>
