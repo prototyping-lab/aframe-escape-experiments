@@ -9,7 +9,8 @@
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
   </head>
   <body>
-    <a-scene background="color: #000000">
+    <a-scene background="color: #000000" fog="type: linear; color: #000000; near:1; far:10;">
+
 
       <a-assets>
         <a-asset-item
@@ -41,7 +42,7 @@
 
         <a-entity light="type: spot;
         intensity:1;
-        distance:12;
+        distance:100;
         angle: 35;
         penumbra:1;
         castShadow:true;"
