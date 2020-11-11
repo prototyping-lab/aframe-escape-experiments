@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>A-Frame rising ocean</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script>
+      AFRAME.registerComponent('rising', {
+        play: function() {
+            // modify ocean material, to display the backside
+            let material = this.el.object3D.children[0].material;
+            material.side =  AFRAME.THREE.DoubleSide;
+        },
+        tick: function (time) {
+          // increase the position over time
+          this.el.setAttribute('position', 'y', time / 5000.0 );
+        }
+      });
+    </script>
+  <body>
+    <a-scene fog="type: linear; color: #fff; far: 20" >
+      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow></a-box>
+      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow></a-sphere>
+      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D" shadow></a-cylinder>
+      <a-ocean rising id="ocean" position="0 0.5 0" scale="4 4 0.2" density="100"></a-ocean>
+      <a-plane rotation="-90 0 0" width="40" height="40" color="#ffa" shadow></a-plane>
+    </a-scene>
+  </body>
+</html>
