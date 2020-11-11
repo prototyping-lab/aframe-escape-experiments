@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A-Frame CSG Three-Axis-Intersection Example</title>
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-csg-meshs/index.js"></script>
+  </head>
+
+  <body>
+    <a-scene>
+      <a-assets>
+        <a-mixin
+          id="tube"
+          geometry="primitive: cylinder; radius:1; height: 4"
+          material="color:#FFC65D"
+          shadow
+        ></a-mixin>
+        <a-mixin id="hidden" visible="false"> </a-mixin>
+      </a-assets>
+      <a-camera position="0 0 4"></a-camera>
+      <a-entity id="x-shape" mixin="hidden tube" rotation="0 0 0"></a-entity>
+      <a-entity id="y-shape" mixin="hidden tube" rotation="90 0 0"></a-entity>
+      <a-entity
+        id="z-shape"
+        mixin="tube"
+        rotation="0 0 90"
+        csg-meshs="intersect: #x-shape, #y-shape"
+      ></a-entity>
+      <a-plane
+        position="0 -1 0"
+        rotation="-90 0 0"
+        width="4"
+        height="4"
+        color="#7BC8A4"
+        shadow
+      ></a-plane>
+      <a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+  </body>
+</html>

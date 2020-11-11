@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A-Frame CSG Three-Axis-Intersection Example</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-csg-meshs/index.js"></script>
+    <script src="https://unpkg.com/aframe-svg-extruder@1.0.0/dist/index.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <a-mixin id="hidden" visible="false"> </a-mixin>
+        <a-asset-item id="x-plan" src="assets/x-plan.svg"></a-asset-item>
+        <a-asset-item id="y-plan" src="assets/y-plan.svg"></a-asset-item>
+        <a-asset-item id="z-plan" src="assets/z-plan.svg"></a-asset-item>
+        <a-mixin id="hidden" visible="false"> </a-mixin>
+      </a-assets>
+
+      <a-camera position="0 0 8"></a-camera>
+
+      <a-plane
+        position="0 -1 0"
+        rotation="-90 0 0"
+        width="4"
+        height="4"
+        color="#7BC8A4"
+        shadow
+      ></a-plane>
+
+      <a-entity  >
+        <a-entity
+          id="x-cut"
+          mixin="hidden"
+          position="-8 0 0"
+          rotation="0 90 0"
+          svg="src:#x-plan; proportionalScale:6; extrude:4"
+        >
+        </a-entity>
+      </a-entity>
+
+      <a-entity>
+        <a-entity
+          id="y-cut"
+          mixin="hidden"
+          position="0 8 0"
+          rotation="90 0 0"
+          svg="src:#y-plan; proportionalScale:6; extrude:4"
+        >
+        </a-entity>
+      </a-entity>
+      
+      <a-entity position="0 0 -8">
+        <a-entity
+          svg="src:#z-plan; proportionalScale:6; extrude:4"
+          csg-meshs="intersect: #x-cut, #y-cut"
+        >
+        </a-entity>
+      </a-entity>
+-->
+      <a-sky color="#339"></a-sky>
+    </a-scene>
+  </body>
+</html>
