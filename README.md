@@ -7,3 +7,7 @@ a-frame snippets and components we might need to create the escape-room experien
 ## riddles
 
 a-frame examples for various types of escape-room riddles
+
+## templates
+
+templates for getting started
