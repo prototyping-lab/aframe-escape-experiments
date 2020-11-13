@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>A-Frame Mouse Interaction (with Mixins)</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script>
+
+      // wrap it all inside an anonymous function
+      (function () {
+
+        // component for touching things
+        AFRAME.registerComponent("touch-me", {
+          init: function () {
+            this.el.addEventListener("mouseenter", (evt) => {
+              console.log(evt.target.id, "touched");
+              addMixin(evt.target, "blow-up");
+            });
+            this.el.addEventListener("mouseleave", (evt) => {
+              console.log(evt.target.id, "un-touched");
+              removeMixin(evt.target, "blow-up");
+            });
+          },
+        });
+
+        // component for clicking things
+        AFRAME.registerComponent("click-me", {
+          init: function () {
+            this.el.addEventListener("click", (evt) => {
+              console.log(evt.target.id, "clicked");
+              toggleMixin(evt.target, "hilite");
+            });
+          },
+        });
+
+        // utiltity functions for adding / removing mixins
+        function toggleMixin(el, mixin) {
+          if (hasMixin(el, mixin)) {
+            removeMixin(el, mixin);
+          } else {
+            addMixin(el, mixin);
+          }
+        }
+
+        function addMixin(el, mixin) {
+          let array = getMixins(el);
+          if (!array.includes(mixin)) {
+            array.push(mixin);
+            el.setAttribute("mixin", array.join(" "));
+          }
+        }
+
+        function removeMixin(el, mixin) {
+          let array = getMixins(el);
+          el.setAttribute("mixin", array.filter((x) => x !== mixin).join(" "));
+        }
+
+        function hasMixin(el, mixin) {
+          let array = getMixins(el);
+          return array.includes(mixin);
+        }
+
+        function getMixins(el) {
+          // return (el.getAttribute("mixin") || "").split(" ");
+          return el.mixinEls.map((m) => m.id);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <a-scene background="color: #FAFAFA">
+      <a-assets>
+        <a-mixin id="blow-up" scale="1.1 1.1 1.1"></a-mixin>
+        <a-mixin
+          id="hilite"
+          material="transparent: true; opacity:0.5"
+        ></a-mixin>
+      </a-assets>
+
+      <a-entity
+        id="camera"
+        position="0 1.6 0"
+        camera
+        wasd-controls
+        look-controls
+        cursor="rayOrigin:mouse;"
+        raycaster="objects: [touch-me]"
+      >
+      </a-entity>
+
+      <a-box
+        touch-me
+        click-me
+        mixin="hilite"
+        id="my-box"
+        position="-1 0.5 -3"
+        rotation="0 45 0"
+        color="#4CC3D9"
+        shadow
+      ></a-box>
+
+      <a-sphere
+        touch-me
+        click-me
+        id="my-sphere"
+        position="0 1.25 -5"
+        radius="1.25"
+        color="#EF2D5E"
+        shadow
+      ></a-sphere>
+
+      <a-cylinder
+        touch-me
+        click-me
+        id="my-cylinder"
+        position="1 0.75 -3"
+        radius="0.5"
+        height="1.5"
+        color="#FFC65D"
+        shadow
+      ></a-cylinder>
+
+      <a-plane
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="4"
+        height="4"
+        color="#7BC8A4"
+        shadow
+      ></a-plane>
+    </a-scene>
+  </body>
+</html>

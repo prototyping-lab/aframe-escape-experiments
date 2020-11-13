@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>A-Frame Mouse Interaction (with entity states)</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script>
+
+      // wrap it all inside an anonymous function
+      (function () {
+
+        // component for touching things
+        AFRAME.registerComponent("touch-me", {
+
+          init: function () {
+
+            // mouse events
+            this.el.addEventListener("mouseenter", (evt) => {
+              evt.target.addState("touched");
+            });
+            this.el.addEventListener("mouseleave", (evt) => {
+              evt.target.removeState("touched");
+            });
+
+            // state events
+            this.el.addEventListener("stateadded", function (evt) {
+              if (evt.detail === "touched") {
+                console.log(evt.target.id, "touched");
+                evt.target.setAttribute("scale", "1.1 1.1 1.1");
+              }
+            });
+            this.el.addEventListener("stateremoved", function (evt) {
+              if (evt.detail === "touched") {
+                console.log(evt.target.id, "un-touched");
+                evt.target.setAttribute("scale", "1 1 1");
+              }
+            });
+
+          },
+        });
+
+        // component for clicking things
+        AFRAME.registerComponent("click-me", {
+          init: function () {
+
+            // mouse events
+            this.el.addEventListener("click", (evt) => {
+              this.toggleState("active");
+            });
+
+            // state events
+            this.el.addEventListener("stateadded", function (evt) {
+              if (evt.detail === "active") {
+                console.log(evt.target.id, "activated");
+                evt.target.setAttribute( "opacity", 0.5);
+ 
+              }
+            });
+            this.el.addEventListener("stateremoved", function (evt) {
+              if (evt.detail === "active") {
+                console.log(evt.target.id, "deactivated");
+                evt.target.setAttribute("opacity", 1);
+              }
+            });
+          },
+          toggleState: function(state) {
+            if (this.el.states.includes(state)) {
+                this.el.removeState(state);
+              } else {
+                this.el.addState(state);
+              }
+          }
+        });
+
+      })();
+    </script>
+  </head>
+  <body>
+    <a-scene background="color: #FAFAFA" debug>
+
+      <a-entity
+        id="camera"
+        position="0 1.6 0"
+        camera
+        wasd-controls
+        look-controls
+        cursor="rayOrigin:mouse;"
+        raycaster="objects: [touch-me], [click-me]"
+      >
+      </a-entity>
+
+      <a-box
+        touch-me
+        id="my-box"
+        position="-1 0.5 -3"
+        rotation="0 45 0"
+        color="#4CC3D9"
+        shadow
+      ></a-box>
+
+      <a-sphere
+        click-me
+        id="my-sphere"
+        position="0 1.25 -5"
+        radius="1.25"
+        color="#EF2D5E"
+        shadow
+      ></a-sphere>
+
+      <a-cylinder
+        touch-me
+        click-me
+        id="my-cylinder"
+        position="1 0.75 -3"
+        radius="0.5"
+        height="1.5"
+        color="#FFC65D"
+        shadow
+      ></a-cylinder>
+
+      <a-plane
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="4"
+        height="4"
+        color="#7BC8A4"
+        shadow
+      ></a-plane>
+    </a-scene>
+  </body>
+</html>
