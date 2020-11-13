@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>SVG-Building - Step 1</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-svg-extruder@1.0.0/dist/index.min.js"></script>
+  </head>
+  <body>
+    <a-scene background="color: #999">
+      <a-assets>
+        <a-asset-item id="wall-svg" src="wall.svg"></a-asset-item>
+        <a-asset-item id="roof-svg" src="roof.svg"></a-asset-item>
+      </a-assets>
+
+      <a-entity id="rig" position="3 0 12">
+        <a-entity
+          camera
+          position="0 1.6 0"
+          look-controls="pointerLockEnabled: true"
+          wasd-controls="acceleration:300"
+        >
+        </a-entity>
+      </a-entity>
+
+      <a-svg
+        src="#wall-svg"
+        proportional-scale="1"
+        rotation="-90 0 0"
+        rotate="0 0 0"
+        extrude="0.5"
+        z-factor="0"
+        scale="3 3 18"
+        position="1 0 3.49553"
+        svg="zFactor: 0.001"
+      >
+      </a-svg>
+
+      <a-svg
+        src="#roof-svg"
+        proportional-scale="1"
+        rotation="-90 0 0"
+        rotate="0 0 0"
+        extrude="0.5"
+        z-factor="0"
+        scale="3 3 12"
+        position="1 4 1.10691"
+        svg="zFactor: 0.001"
+      >
+      </a-svg>
+    </a-scene>
+  </body>
+</html>

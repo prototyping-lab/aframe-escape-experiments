@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>SVG-Building: Step 5</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      
+      <a-assets>
+        <a-asset-item id="building" src="building.gltf"></a-asset-item>
+        <a-asset-item id="navmesh" src="navmesh.gltf"></a-asset-item>
+      </a-assets>
+
+      <!-- you need the movement controls from A-Frame extras to use the navmesh -->
+      <a-entity
+        id="rig"
+        position="3 0 12"
+        movement-controls="constrainToNavMesh: true"
+      >
+        <a-entity
+          camera
+          position="0 1.6 0"
+          look-controls="pointerLockEnabled: true"
+        >
+        </a-entity>
+      </a-entity>
+
+      <a-entity gltf-model="#building"></a-entity>
+      <!-- make sure to add the "nav-mesh" property here -->
+      <a-entity gltf-model="#navmesh" nav-mesh visible="false"></a-entity>
+
+    </a-scene>
+  </body>
+</html>

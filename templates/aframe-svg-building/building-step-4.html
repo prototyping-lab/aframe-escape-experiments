@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>SVG-Building: Step 4</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
+  </head>
+  <body>
+    <a-scene inspector-plugin-recast>
+      
+      <a-assets>
+        <a-asset-item id="building" src="building.gltf"></a-asset-item>
+      </a-assets>
+
+      <a-entity
+        id="rig"
+        position="3 0 12"
+        rotation="0 0 0"
+      >
+        <a-entity
+          camera
+          position="0 1.6 0"
+          look-controls="pointerLockEnabled: true"
+          movement-controls="constrainToNavMesh: true"
+        >
+        </a-entity>
+      </a-entity>
+
+      <!-- use the gltf model -->
+      <a-entity gltf-model="#building"></a-entity>
+
+      <!-- add a ground plane -->
+      <a-plane
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="100"
+        height="100"
+        color="#7BC8A4"
+        shadow
+      ></a-plane>
+
+    </a-scene>
+  </body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>SVG-Building - Step 1</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-svg-extruder@1.0.0/dist/index.min.js"></script>
+    <script src="https://unpkg.com/aframe-csg-meshs@1.0.0/index.js"></script>
+  </head>
+  <body>
+    <a-scene background="color: #999" debug>
+
+      <a-assets>
+        <a-asset-item id="wall-svg" src="wall.svg"></a-asset-item>
+        <a-asset-item id="roof-svg" src="roof.svg"></a-asset-item>
+        <!-- use a mixin for the windows, to keep the code clean-->
+        <a-mixin
+          id="window"
+          material="transparent: true; opacity: 0.1; color: blue"
+          scale="4 1 1"
+        ></a-mixin>
+      </a-assets>
+
+      <a-entity id="rig" position="3 0 12">
+        <a-entity
+          camera
+          position="0 1.6 0"
+          look-controls="pointerLockEnabled: true"
+          wasd-controls="acceleration:300"
+        >
+        </a-entity>
+      </a-entity>
+
+      <a-svg
+        id="wall"
+        src="#wall-svg"
+        proportional-scale="1"
+        rotation="-90 0 0"
+        extrude="0.5"
+        z-factor="0"
+        scale="3 3 18"
+        position="1 0 3.49553"
+        svg="zFactor: 0.001"
+        csg-meshs="subtract: a-box"
+      >
+      </a-svg>
+
+      <a-svg
+        id="roof"
+        src="#roof-svg"
+        proportional-scale="1"
+        rotation="-90 0 0"
+        extrude="0.5"
+        z-factor="0"
+        scale="3 3 12"
+        position="1 4 1.10691"
+        svg="zFactor: 0.001"
+      >
+      </a-svg>
+
+      <!-- you can position and rotate the boxes inside the A-Frame editor -->
+      <a-box
+        mixin="window"
+        position="4.93837 1.41469 -1.93626"
+        rotation="0 -70 0"
+      ></a-box>
+
+      <a-box
+        mixin="window"
+        position="6.71554 1.41469 -4.28954"
+        rotation="0 -30 0"
+      ></a-box>
+
+      <a-box
+        mixin="window"
+        position="-6.04127 1.84222 -3.62219"
+        rotation="-0.02 30 0"
+      ></a-box>
+
+      <a-box
+        mixin="window"
+        position="-3.68982 1.6478 -1.93626"
+        rotation="0 50 0"
+      ></a-box>
+
+      <a-box
+        mixin="window"
+        position="-3.68982 1.6478 -12.70674"
+        rotation="0 134.34714380227544 0"
+      ></a-box>
+
+      <a-box
+        mixin="window"
+        position="-6.61407 1.84222 -9.50532"
+        rotation="-0.020053522829578813 -4.451309110371366 0"
+      ></a-box>
+
+      <a-box
+        mixin="window"
+        position="7.79833 1.41469 -11.24963"
+        rotation="0 37.87881279389385 0"
+      ></a-box>
+
+      <a-box
+        mixin="window"
+        position="4.7615 1.41469 -13.27626"
+        rotation="0 -107.09326036128756 0"
+      ></a-box>
+      
+    </a-scene>
+  </body>
+</html>
