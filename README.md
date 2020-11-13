@@ -10,4 +10,4 @@ a-frame examples for various types of escape-room riddles
 
 ## templates
 
-templates for getting started
+templates for world building
