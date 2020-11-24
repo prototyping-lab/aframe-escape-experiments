@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://aframeai.github.io/aframe-bricks/dist/aframe-bricks.min.js"></script>
+  </head>
+  <body>
+    <a-scene debug>
+      <a-assets>
+        <a-asset-item id="car-model" src="car.ldr_Packed.mpd"></a-asset-item>
+      </a-assets>
+      <a-entity position="0 0 -4" rotation="0 45 0">
+        <a-bricks
+          id="car"
+          src="#car-model"
+          steps="10"
+          scale="0.01 0.01 0.01"
+          position="0 1 0"
+        ></a-bricks>
+        <a-plane
+          rotation="-90 0 0"
+          width="4"
+          height="4"
+          color="#7BC8A4"
+          shadow
+        ></a-plane>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
