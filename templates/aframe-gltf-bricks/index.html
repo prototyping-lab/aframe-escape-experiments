@@ -44,12 +44,17 @@
         id="hover"
         animation__2="property: position; from: 0 -3 0; to: 0 -5 0; dur: 1000; easing: easeInOutSine; dir: alternate; loop: true"
       ></a-mixin>
+
+      <a-mixin
+        id="pump"
+        animation__2="property: scale; from: 1 1 1; to: 1.5 1.5 1.5; dur: 1000; easing: easeInOutSine; dir: alternate; loop: true"
+      ></a-mixin>
     </a-assets>
 
     <a-entity position="0 0 -10" rotation="180 0 0" scale="0.5 0.5 0.5">
-      <a-entity gltf-model="#bricks"></a-entity>
+      <!--  <a-entity id="model" gltf-model="#bricks"></a-entity> -->
 
-      <!-- Parts that only occur once are found  -->
+      <!-- Parts that only occur once -->
 
       <a-entity
         id="door"
@@ -77,13 +82,77 @@
         mixin="pink slime"
       ></a-entity>
 
-      <!-- Parts that occur multiple times are NOT found (!) -->
-      <!--
-      <a-entity gltf-part="src: #bricks; part: Part-3062b_dot_dat"></a-entity>
-      <a-entity gltf-part="src: #bricks; part: Part-3001_dot_dat"></a-entity>
-      <a-entity gltf-part="src: #bricks; part: Part-30144_dot_dat"></a-entity>
-      -->
+      <!-- Parts that occur multiple times  -->
 
+      <!-- 12 cylindrical bricks -->
+
+      <!-- the scaling center =!= part center -->
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_0"
+        mixin="pump"
+      ></a-entity>
+
+      <!-- material modding does not work yet ...-->
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_1"
+        mod-material="color: #f00;"
+      ></a-entity>
+
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_2"
+      ></a-entity>
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_3"
+      ></a-entity>
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_4"
+      ></a-entity>
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_5"
+      ></a-entity>
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_6"
+      ></a-entity>
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_7"
+      ></a-entity>
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_8"
+      ></a-entity>
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_9"
+      ></a-entity>
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_10"
+      ></a-entity>
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_11"
+      ></a-entity>
+
+      <!-- 4 walls -->
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3001_dot_dat_instance_0"
+      ></a-entity>
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3001_dot_dat_instance_1"
+      ></a-entity>
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3001_dot_dat_instance_2"
+      ></a-entity>
+      <a-entity
+        gltf-part="src: #bricks; part: Part-3001_dot_dat_instance_3"
+      ></a-entity>
+
+      <!-- big bricks -->
+      <a-entity
+        gltf-part="src: #bricks; part: Part-30144_dot_dat_instance_0"
+      ></a-entity>
+      <a-entity
+        gltf-part="src: #bricks; part: Part-30144_dot_dat_instance_1"
+      ></a-entity>
+      <a-entity
+        gltf-part="src: #bricks; part: Part-30144_dot_dat_instance_2"
+      ></a-entity>
     </a-entity>
   </a-scene>
 </body>
