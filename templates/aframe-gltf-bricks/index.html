@@ -1,0 +1,89 @@
+<head>
+  <title>My A-Frame Scene</title>
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-gltf-part-component@1.2.0/dist/aframe-gltf-part-component.min.js"></script>
+
+  <script>
+    AFRAME.registerComponent("mod-material", {
+      schema: {
+        opacity: { default: 1.0, min: 0.0, max: 1.0 },
+        color: { type: "color", default: "white" },
+      },
+      update: function (data) {
+        if (this.model) {
+          const material = this.model.material;
+          const data = this.data;
+          material.color.set(data.color);
+          material.opacity = data.opacity;
+          material.transparent = data.opacity < 1.0;
+        }
+      },
+      play: function (data) {
+        // pass a callback to getModel from gltf-part to update the model
+        this.el.components["gltf-part"].getModel((model) => {
+          this.model = model;
+        });
+      },
+    });
+  </script>
+</head>
+
+<body>
+  <a-scene background="color: #000">
+    <a-assets>
+      <a-asset-item id="bricks" src="staircase.glb"></a-asset-item>
+      <a-mixin id="slime" mod-material="opacity: 0.5"></a-mixin>
+      <a-mixin id="blue" mod-material="color: #0ff;"></a-mixin>
+      <a-mixin id="pink" mod-material="color: #f0f;"></a-mixin>
+      <a-mixin id="green" mod-material="color: #0f0;"></a-mixin>
+      <a-mixin
+        id="blink"
+        animation__1="property: mod-material.opacity; from:0.5; to:1; dur: 200; easing: easeInOutSine; dir: alternate; loop: true"
+      ></a-mixin>
+      <a-mixin
+        id="hover"
+        animation__2="property: position; from: 0 -3 0; to: 0 -5 0; dur: 1000; easing: easeInOutSine; dir: alternate; loop: true"
+      ></a-mixin>
+    </a-assets>
+
+    <a-entity position="0 0 -10" rotation="180 0 0" scale="0.5 0.5 0.5">
+      <a-entity gltf-model="#bricks"></a-entity>
+
+      <!-- Parts that only occur once are found  -->
+
+      <a-entity
+        id="door"
+        gltf-part="src: #bricks; part: Part-89513_dot_dat"
+        mixin="blue slime blink"
+      ></a-entity>
+      <a-entity
+        id="key"
+        gltf-part="src: #bricks; part: Part-62808_dot_dat"
+        mixin="blue slime blink hover"
+      ></a-entity>
+      <a-entity
+        id="stand"
+        gltf-part="src: #bricks; part: Part-67929_dot_dat"
+        mixin="green slime"
+      ></a-entity>
+      <a-entity
+        id="staircase"
+        gltf-part="src: #bricks; part: Part-40243c01_dot_dat"
+        mixin="slime"
+      ></a-entity>
+      <a-entity
+        id="platform"
+        gltf-part="src: #bricks; part: Part-6179_dot_dat"
+        mixin="pink slime"
+      ></a-entity>
+
+      <!-- Parts that occur multiple times are NOT found (!) -->
+      <!--
+      <a-entity gltf-part="src: #bricks; part: Part-3062b_dot_dat"></a-entity>
+      <a-entity gltf-part="src: #bricks; part: Part-3001_dot_dat"></a-entity>
+      <a-entity gltf-part="src: #bricks; part: Part-30144_dot_dat"></a-entity>
+      -->
+
+    </a-entity>
+  </a-scene>
+</body>
