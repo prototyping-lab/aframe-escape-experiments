@@ -1,4 +1,4 @@
-# aframe-gltf-modding
+# aframe-gltf-bricks
 
 How to extract single parts froms a model that was:
 - created with [LEGO studio](http://stud.io)
