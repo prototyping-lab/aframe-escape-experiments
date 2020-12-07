@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>A-Frame mouse navigation</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script>
+      AFRAME.registerComponent("click-nav", {
+
+        schema: {
+          cursor: { type: "selector", default: "#cursor" },
+          // footprint: { type: "selector", default: "#footprint" },
+        },
+
+        init: function () {
+
+          this.createCursor();
+
+          this.el.addEventListener("raycaster-intersected", (evt) => {
+            this.raycaster = evt.detail.el;          });
+
+          this.el.addEventListener("raycaster-intersected-cleared", (evt) => {
+            this.raycaster = null;
+          });
+
+          this.el.addEventListener("mousedown", (evt) => {
+            // console.log("mouse down");
+            this.mousedown = true;
+            this.createPath();
+          });
+
+          this.el.addEventListener("mouseup", (evt) => {
+            // console.log("mouse up");
+            this.mousedown = false;
+            this.removePath();
+          });
+
+          this.el.addEventListener("mouseleave", (evt) => {
+            // console.log("mouse left");
+            this.mouseinside = false;
+            this.removeCursor();
+            this.removePath();
+          });
+
+          this.el.addEventListener("mouseenter", (evt) => {
+            // console.log("mouse entered");
+            this.mouseinside = true;
+            this.addCursor();
+          });
+
+          document.addEventListener(
+            "mousemove",
+            ((evt) => {
+              //console.log("mouse moved");
+              this.updateCursor();
+              this.removePath();
+              if (this.mousedown && this.mouseinside) {
+                this.createPath();
+              }
+            }).bind(this)
+          );
+
+          // get nav system from aframe extras
+          this.nav = this.el.sceneEl.systems.nav;
+
+          this.footprints = [];
+        },
+
+        createCursor: function () {
+          if (!this.data.cursor) {
+            let cursor = document.createElement("a-ring");
+            cursor.setAttribute("id", "cursor");
+            cursor.setAttribute("radius-inner", "0.2");
+            cursor.setAttribute("radius-outer", "0.25");
+            cursor.setAttribute("rotation", "-90 0 0");
+            cursor.setAttribute("material", "opacity", "0.5");
+            this.el.sceneEl.appendChild(cursor);
+            this.cursor = cursor;
+          } else {
+            this.cursor = this.data.cursor;
+          }
+        },
+
+        removeCursor: function () {
+          this.cursor.object3D.visible = false;
+        },
+
+        addCursor: function () {
+          this.cursor.object3D.visible = true;
+        },
+
+        updateCursor: function () {
+          if (!this.raycaster) {
+            return; // Not intersecting.
+          }
+          let intersection = this.raycaster.components.raycaster.getIntersection(
+            this.el
+          );
+          if (this.cursor) {
+            let p = intersection.point;
+            // TODO: use the surface normal instead of y-axis to offset the cursor
+            this.cursor.object3D.position.set(p.x, p.y + 0.01, p.z);
+          }
+        },
+
+        // TODO: distribute footprints more evenly?
+        createFootprints: function (path) {
+          let speed = 0.25;
+          let vec = new THREE.Vector3();
+          let dvec = new THREE.Vector3();
+          for (var i = 1; i < path.length; i++) {
+            dvec.subVectors(path[i], path[i - 1]);
+            let dist = dvec.length();
+            let delta = speed;
+            while (delta < dist) {
+              dvec.setLength(delta);
+              vec.addVectors(path[i - 1], dvec);
+              delta += speed;
+              this.createFootprint(vec);
+            }
+          }
+        },
+
+        // TODO: custom footprints
+        // TODO: pool footprints
+        // See: https://aframe.io/docs/1.0.0/components/pool.html
+        createFootprint(p) {
+          let footprint = document.createElement("a-ring");
+          footprint.setAttribute("position", { x: p.x, y: p.y + 0.01, z: p.z });
+          footprint.setAttribute("scale", "0.1 0.1 0.1");
+          footprint.setAttribute("color", "#fff");
+          footprint.setAttribute("rotation", "-90 0 0");
+          footprint.setAttribute("material", "opacity", "0.5");
+          this.el.sceneEl.appendChild(footprint);
+          this.footprints.push(footprint);
+        },
+
+        createPath: function () {
+
+          // position and destination
+          const position = document.querySelector("#rig").object3D.position;
+          const destination = this.cursor.object3D.position;
+
+          // path from position to target
+          this.group = this.group || this.nav.getGroup(position);
+
+          // add footprints
+          this.path = this.nav.getPath(position, destination, this.group) || [];
+          if (this.path.length) {
+            this.path.unshift(position);
+            this.createFootprints(this.path);
+          }
+
+        },
+
+        removePath: function () {
+          if (!this.footprints.length) {
+            return;
+          }
+          for (footprint of this.footprints) {
+            this.el.sceneEl.removeChild(footprint);
+          }
+          this.footprints = [];
+        },
+
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <a-asset-item id="navmesh" src="navmesh.gltf"></a-asset-item>
+      </a-assets>
+
+      <a-entity id="rig" movement-controls="constrainToNavMesh: true">
+        <a-entity
+          camera
+          id="camera"
+          position="0 1.6 0"
+          camera
+          cursor="rayOrigin:mouse;"
+          raycaster="objects: [click-nav]"
+          look-controls
+        >
+        </a-entity>
+      </a-entity>
+
+      <a-entity
+        gltf-model="#navmesh"
+        nav-mesh
+        click-nav="cursor:#mycursor"
+        visible="false"
+      ></a-entity>
+
+      <a-torus radius="0.2" radius-tubular="0.015" rotation="90 0 0" material="opacity:1" id="mycursor">
+      </a-torus>
+
+      <a-box
+        position="-1 0.5 -3"
+        rotation="0 45 0"
+        color="#4CC3D9"
+        shadow
+      ></a-box>
+
+      <a-sphere
+        position="0 1.25 -5"
+        radius="1.25"
+        color="#EF2D5E"
+        shadow
+      ></a-sphere>
+
+      <a-cylinder
+        position="1 0.75 -3"
+        radius="0.5"
+        height="1.5"
+        color="#FFC65D"
+        shadow
+      ></a-cylinder>
+
+      <a-plane
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="12"
+        height="12"
+        color="#7BC8A4"
+        shadow
+      ></a-plane>
+
+    </a-scene>
+  </body>
+</html>
