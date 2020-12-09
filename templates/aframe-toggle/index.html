@@ -8,23 +8,34 @@
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
     <script src="https://unpkg.com/aframe-gltf-part-component/dist/aframe-gltf-part-component.min.js"></script>
     <script src="../aframe-inspector-plugin-recast.js"></script>
-
-  
-
   </head>
   <body>
-    <a-scene inspector-plugin-recast="serviceURL: http://localhost:3000" background="color:#999">
+    <a-scene
+      inspector-plugin-recast="serviceURL: http://localhost:3000"
+      background="color:#999"
+    >
       <a-assets>
         <a-asset-item id="lego" src="assets/static.glb"></a-asset-item>
         <a-asset-item id="red" src="assets/red.glb"></a-asset-item>
         <a-asset-item id="brown" src="assets/brown.glb"></a-asset-item>
 
-      <a-asset-item id="navmesh" src="assets/navmesh_brown.gltf"></a-asset-item>
+        <a-asset-item
+          id="navmesh"
+          src="assets/navmesh_brown.gltf"
+        ></a-asset-item>
       </a-assets>
 
-      <a-mixin id="blink" animation__1="property: mod-material.opacity; from:0.5; to:1; dur: 200; easing: easeInOutSine; dir: alternate; loop: true"></a-mixin>
-      
-      <a-entity id="rig" movement-controls="constrainToNavMesh: true"  position="0 0 -10" rotation="0 180 0">
+      <a-mixin
+        id="blink"
+        animation__1="property: mod-material.opacity; from:0.5; to:1; dur: 200; easing: easeInOutSine; dir: alternate; loop: true"
+      ></a-mixin>
+
+      <a-entity
+        id="rig"
+        movement-controls="constrainToNavMesh: true"
+        position="0 0 -10"
+        rotation="0 180 0"
+      >
         <a-entity
           position="0 1.6 0"
           id="camera"
@@ -39,7 +50,6 @@
           gltf-model="#lego"
         ></a-entity>
 
-        
         <a-entity
           position="0 0 0"
           rotation="180 0 0"
@@ -47,13 +57,12 @@
           visible="false"
         ></a-entity>
 
-       <a-entity
+        <a-entity
           position="0 0 0"
           rotation="180 0 0"
           gltf-model="#brown"
           visible="true"
         ></a-entity>
-    
 
         <a-plane
           color="#363"
@@ -65,26 +74,17 @@
         ></a-plane>
       </a-entity>
 
-
-
       <a-entity
-      nav-mesh
-      gltf-part="src: #navmesh; part: AuxScene"
-      material="transparent:true; opacity:0.3"
-    ></a-entity>
+        nav-mesh
+        gltf-part="src: #navmesh; part: AuxScene"
+        material="transparent:true; opacity:0.3"
+      ></a-entity>
 
-
-
-
-    <!--
+      <!--
 
     <a-entity id="platform" gltf-part="src: #lego; part: Part-85984pb077_dot_dat_1" mixin="blink"></a-entity>
 
 	-->
- 
     </a-scene>
   </body>
 </html>
-
-
-
