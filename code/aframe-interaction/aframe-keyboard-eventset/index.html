@@ -1,0 +1,45 @@
+<script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+<script src="https://unpkg.com/aframe-template-component@3.2.1/dist/aframe-template-component.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.js"></script>
+<script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.js"></script>
+<body>
+  <a-scene
+    cursor="rayOrigin:mouse"
+    raycaster="objects:.interactive"
+    background="color:#339"
+  >
+    <a-assets>
+
+      <a-mixin
+        id="mouse"
+        event-set__mouseenter="color: #ddd;"
+        event-set__mouseleave="color: #aaa;"
+        event-set__mousedown="color: #696"
+        event-set__mouseup="color: #ddd"
+      ></a-mixin>
+
+      <!-- use a template to create one button for each numeric key -->
+      <script id="buttons" type="text/x-nunjucks-template">
+        {% for i in range(1, 10) %}
+          <a-torus
+            id="button-{{ i }}"
+            color="#aaa"
+            mixin="mouse"
+            class="interactive"
+            position="{{  (i - 5) * 2.5 }} 0 0"
+            keyboard-controls="debug:true"
+            event-set__keydown="_event:keydown:Digit{{ i }} ;color: #f66"
+            event-set__keyup="_event:keyup:Digit{{ i }} ; color: #aaa"
+          >
+          </a-torus>
+        {% endfor %}
+      </script>
+    </a-assets>
+
+    <a-entity id="rig" movement-controls>
+      <a-entity camera look-controls position="0 1.6 0"></a-entity>
+    </a-entity>
+
+    <a-entity position="0 1.6 -10" template="src: #buttons"></a-entity>
+  </a-scene>
+</body>
