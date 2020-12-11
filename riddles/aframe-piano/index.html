@@ -12,11 +12,9 @@
         update: function () {
           this.el.addEventListener("switch-on", () => {
             this.el.setAttribute(this.data, "");
-            console.log("on");
           });
           this.el.addEventListener("switch-off", () => {
             this.el.removeAttribute(this.data);
-            console.log("off");
           });
         },
       });
