@@ -30,6 +30,13 @@ templates for world building
 --- 
 ## Links
 
+### Escape Room Puzzle Design
+
+* [The Codex](https://thecodex.ca/) (website)
+* [Escape Room Design Resources](https://docs.google.com/document/d/1lwSTxIews8azOqzHEy0vyoSrX7orx55pRImXWuBVkjU/edit) (google doc)
+* [101 best puzzle ideas for escape rooms](https://nowescape.com/blog/101-best-puzzle-ideas-for-escape-rooms/)
+* [200 Escape Room Rätsel-Ideen](https://www.escaperoomsupplier.com/de/200-escape-room-raetsel-ideen/)
+
 ### HTML → DOM + JS + Events
 
 * [CSS-Selectors](https://developer.mozilla.org/de/docs/Web/CSS/CSS_Selectors) (find tags)
