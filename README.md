@@ -24,7 +24,6 @@ templates for world building
 
 * [aframe-plus](https://glitch.com/~aframe-plus) — aframe + watcher (saving from the editor)
 * [aframe-recast](https://glitch.com/~aframe-recast) — aframe + recast (navmesh generation)
-* [aframe-recast](https://glitch.com/~aframe-recast) — aframe + recast (navmesh generation)
 * [collada-to-gltf](https://collada-to-gltf.glitch.me) —  DAE to GLB converter (lego.dae → lego.glb)
 * [js-fx](https://jsfx.glitch.me/) —  sound generator
 
