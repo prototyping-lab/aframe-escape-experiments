@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-gltf-part-component/dist/aframe-gltf-part-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-proxy-event-component@2.1.0/dist/aframe-proxy-event-component.min.js"></script>
+    <script>
+      // create event listeners to switch another component on/off
+      AFRAME.registerComponent("switch", {
+        update: function () {
+          this.el.addEventListener("switch-on", () => {
+            this.el.setAttribute(this.data, "");
+            console.log("on");
+          });
+          this.el.addEventListener("switch-off", () => {
+            this.el.removeAttribute(this.data);
+            console.log("off");
+          });
+        },
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene
+      debug
+      cursor="rayOrigin:mouse"
+      raycaster="objects:[gltf-part], [gltf-model]"
+      background="color:#339"
+    >
+      <a-assets>
+        <a-asset-item id="piano" src="buffet-piano-no-keys.glb"></a-asset-item>
+        <a-asset-item id="keys" src="buffet-piano-only-keys.glb"></a-asset-item>
+        <a-mixin
+          id="piano-key"
+          gltf-part="src:#keys"
+          sound="autoplay:true"
+          event-set__press="_event:mousedown; position: 0 0.15 0.01"
+          event-set__release="_event:mouseup; position: 0 0 0; sound.src:;"
+        >
+        </a-mixin>
+        <audio id="do" src="piano-c.mp3" preload="auto"></audio>
+        <audio id="re" src="piano-d.mp3" preload="auto"></audio>
+        <audio id="mi" src="piano-e.mp3" preload="auto"></audio>
+        <audio id="fa" src="piano-f.mp3" preload="auto"></audio>
+        <audio id="sol" src="piano-g.mp3" preload="auto"></audio>
+        <audio id="la" src="piano-a.mp3" preload="auto"></audio>
+      </a-assets>
+
+      <a-entity id="rig" movement-controls>
+        <a-entity camera look-controls position="0 1.6 0"></a-entity>
+      </a-entity>
+
+      <a-entity id="piano1" scale="0.5 0.5 0.5" position="-3 0 -6">
+        <a-entity
+          id="piano1"
+          gltf-model="#piano"
+          switch="keyboard-controls"
+          proxy-event__enter="event:mouseenter; captureBubbles:true; to:#piano1; as:switch-on"
+          proxy-event__leave="event:mouseleave; to:#piano1; as:switch-off"
+          proxy-event__do_down="event:keydown:Digit1; to:#piano1 .key-do; as:mousedown"
+          proxy-event__do_up="event:keyup:Digit1; to:#piano1 .key-do; as:mouseup"
+          proxy-event__re_down="event:keydown:Digit2; to:#piano1 .key-re; as:mousedown"
+          proxy-event__re_up="event:keyup:Digit2; to:#piano1 .key-re; as:mouseup"
+          proxy-event__mi_down="event:keydown:Digit3; to:#piano1 .key-mi; as:mousedown"
+          proxy-event__mi_up="event:keyup:Digit3; to:#piano1 .key-mi; as:mouseup"
+          proxy-event__fa_down="event:keydown:Digit4; to:#piano1 .key-fa; as:mousedown"
+          proxy-event__fa_up="event:keyup:Digit4; to:#piano1 .key-fa; as:mouseup"
+          proxy-event__sol_down="event:keydown:Digit5; to:#piano1 .key-sol; as:mousedown"
+          proxy-event__sol_up="event:keyup:Digit5; to:#piano1 .key-sol; as:mouseup"
+          proxy-event__la_down="event:keydown:Digit6; to:#piano1 .key-la; as:mousedown"
+          proxy-event__la_up="event:keyup:Digit6; to:#piano1 .key-la; as:mouseup"
+        >
+          <a-entity scale="1 -1 1">
+            <a-entity
+              class="key-do"
+              mixin="piano-key"
+              gltf-part="part:Part-3069b_dot_dat_instance_0"
+              event-set__mousedown="sound.src:#do"
+            ></a-entity>
+            <a-entity
+              class="key-re"
+              mixin="piano-key"
+              gltf-part="part:Part-3069b_dot_dat_instance_1"
+              event-set__mousedown="sound.src:#re"
+            ></a-entity>
+            <a-entity
+              class="key-mi"
+              mixin="piano-key"
+              gltf-part="part:Part-3069b_dot_dat_instance_2"
+              event-set__mousedown="sound.src:#mi"
+            ></a-entity>
+            <a-entity
+              class="key-fa"
+              mixin="piano-key"
+              gltf-part="part:Part-3069b_dot_dat_instance_3"
+              event-set__mousedown="sound.src:#fa"
+            ></a-entity>
+            <a-entity
+              class="key-sol"
+              mixin="piano-key"
+              gltf-part="part:Part-3069b_dot_dat_instance_4"
+              event-set__mousedown="sound.src:#sol"
+            ></a-entity>
+            <a-entity
+              class="key-la"
+              mixin="piano-key"
+              gltf-part="part:Part-3069b_dot_dat_instance_5"
+              event-set__mousedown="sound.src:#la"
+            ></a-entity>
+          </a-entity>
+        </a-entity>
+      </a-entity>
+
+      <a-entity id="piano2" scale="0.5 0.5 0.5" position="2 0 -6">
+        <a-entity
+          id="piano2"
+          gltf-model="#piano"
+          switch="keyboard-controls"
+          proxy-event__enter="event:mouseenter; captureBubbles:true; to:#piano2; as:switch-on"
+          proxy-event__leave="event:mouseleave; to:#piano2; as:switch-off"
+          proxy-event__do_down="event:keydown:Digit1; to:#piano2 .key-do; as:mousedown"
+          proxy-event__do_up="event:keyup:Digit1; to:#piano2 .key-do; as:mouseup"
+          proxy-event__re_down="event:keydown:Digit2; to:#piano2 .key-re; as:mousedown"
+          proxy-event__re_up="event:keyup:Digit2; to:#piano2 .key-re; as:mouseup"
+          proxy-event__mi_down="event:keydown:Digit3; to:#piano2 .key-mi; as:mousedown"
+          proxy-event__mi_up="event:keyup:Digit3; to:#piano2 .key-mi; as:mouseup"
+          proxy-event__fa_down="event:keydown:Digit4; to:#piano2 .key-fa; as:mousedown"
+          proxy-event__fa_up="event:keyup:Digit4; to:#piano2 .key-fa; as:mouseup"
+          proxy-event__sol_down="event:keydown:Digit5; to:#piano2 .key-sol; as:mousedown"
+          proxy-event__sol_up="event:keyup:Digit5; to:#piano2 .key-sol; as:mouseup"
+          proxy-event__la_down="event:keydown:Digit6; to:#piano2 .key-la; as:mousedown"
+          proxy-event__la_up="event:keyup:Digit6; to:#piano2 .key-la; as:mouseup"
+        >
+          <a-entity scale="1 -1 1">
+            <a-entity
+              class="key-do"
+              mixin="piano-key"
+              gltf-part="part:Part-3069b_dot_dat_instance_0"
+              event-set__mousedown="sound.src:#do"
+            ></a-entity>
+            <a-entity
+              class="key-re"
+              mixin="piano-key"
+              gltf-part="part:Part-3069b_dot_dat_instance_1"
+              event-set__mousedown="sound.src:#re"
+            ></a-entity>
+            <a-entity
+              class="key-mi"
+              mixin="piano-key"
+              gltf-part="part:Part-3069b_dot_dat_instance_2"
+              event-set__mousedown="sound.src:#mi"
+            ></a-entity>
+            <a-entity
+              class="key-fa"
+              mixin="piano-key"
+              gltf-part="part:Part-3069b_dot_dat_instance_3"
+              event-set__mousedown="sound.src:#fa"
+            ></a-entity>
+            <a-entity
+              class="key-sol"
+              mixin="piano-key"
+              gltf-part="part:Part-3069b_dot_dat_instance_4"
+              event-set__mousedown="sound.src:#sol"
+            ></a-entity>
+            <a-entity
+              class="key-la"
+              mixin="piano-key"
+              gltf-part="part:Part-3069b_dot_dat_instance_5"
+              event-set__mousedown="sound.src:#la"
+            ></a-entity>
+          </a-entity>
+        </a-entity>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
