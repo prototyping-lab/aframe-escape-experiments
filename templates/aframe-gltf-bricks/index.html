@@ -1,28 +1,23 @@
 <head>
   <title>My A-Frame Scene</title>
-  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
   <script src="https://unpkg.com/aframe-gltf-part-component@1.2.0/dist/aframe-gltf-part-component.min.js"></script>
 
   <script>
-    AFRAME.registerComponent("mod-material", {
-      schema: {
-        opacity: { default: 1.0, min: 0.0, max: 1.0 },
-        color: { type: "color", default: "white" },
+    AFRAME.registerComponent("center", {
+      init: function () {
+        this.scale();
+        this.el.addEventListener("object3dset", () => this.scale());
       },
-      update: function (data) {
-        if (this.model) {
-          const material = this.model.material;
-          const data = this.data;
-          material.color.set(data.color);
-          material.opacity = data.opacity;
-          material.transparent = data.opacity < 1.0;
-        }
-      },
-      play: function (data) {
-        // pass a callback to getModel from gltf-part to update the model
-        this.el.components["gltf-part"].getModel((model) => {
-          this.model = model;
-        });
+      scale: function () {
+        const el = this.el;
+        const obj = el.object3D;
+        const mesh = el.getObject3D("mesh");
+        if (!mesh) return;
+        const bbox = new THREE.Box3().setFromObject(mesh);
+        const offset = bbox.getCenter();
+        mesh.position.sub(offset);
+        obj.position.add(offset);
       },
     });
   </script>
@@ -32,13 +27,13 @@
   <a-scene background="color: #000">
     <a-assets>
       <a-asset-item id="bricks" src="staircase.glb"></a-asset-item>
-      <a-mixin id="slime" mod-material="opacity: 0.5"></a-mixin>
-      <a-mixin id="blue" mod-material="color: #0ff;"></a-mixin>
-      <a-mixin id="pink" mod-material="color: #f0f;"></a-mixin>
-      <a-mixin id="green" mod-material="color: #0f0;"></a-mixin>
+      <a-mixin id="slime" material="opacity: 0.5"></a-mixin>
+      <a-mixin id="blue" material="color: #0ff;"></a-mixin>
+      <a-mixin id="pink" material="color: #f0f;"></a-mixin>
+      <a-mixin id="green" material="color: #0f0;"></a-mixin>
       <a-mixin
         id="blink"
-        animation__1="property: mod-material.opacity; from:0.5; to:1; dur: 200; easing: easeInOutSine; dir: alternate; loop: true"
+        animation__1="property: material.opacity; from:0.5; to:1; dur: 200; easing: easeInOutSine; dir: alternate; loop: true"
       ></a-mixin>
       <a-mixin
         id="hover"
@@ -46,7 +41,8 @@
       ></a-mixin>
       <a-mixin
         id="pump"
-        animation__3="property: scale; from: 1 1 1; to: 1.5 1.5 1.5; dur: 2000; easing: easeInOutSine; dir: alternate; loop: true"
+        animation__3="property: scale; from: 0.5 0.5 0.5; to: 1 1 1; dur: 500; easing: easeInOutSine; dir: alternate; loop: true"
+        center
       ></a-mixin>
     </a-assets>
 
@@ -54,7 +50,6 @@
       <!--  <a-entity id="model" gltf-model="#bricks"></a-entity> -->
 
       <!-- Parts that only occur once -->
-
       <a-entity
         id="door"
         gltf-part="src: #bricks; part: Part-89513_dot_dat"
@@ -87,14 +82,12 @@
 
       <!-- the scaling center =!= part center -->
       <a-entity
+        id="test"
         gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_0"
         mixin="pump"
       ></a-entity>
-
-      <!-- material modding does not work yet ...-->
       <a-entity
         gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_1"
-        mod-material="color: #f00;"
         mixin="pump"
       ></a-entity>
       <a-entity
@@ -112,12 +105,10 @@
       <a-entity
         gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_5"
         mixin="pump"
-        animation__3="delay:2000;"
       ></a-entity>
       <a-entity
         gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_6"
         mixin="pump"
-        animation__3="delay:2000;"
       ></a-entity>
       <a-entity
         gltf-part="src: #bricks; part: Part-3062b_dot_dat_instance_7"
@@ -160,9 +151,6 @@
       ></a-entity>
       <a-entity
         gltf-part="src: #bricks; part: Part-30144_dot_dat_instance_1"
-      ></a-entity>
-      <a-entity
-        gltf-part="src: #bricks; part: Part-30144_dot_dat_instance_2"
       ></a-entity>
     </a-entity>
   </a-scene>
