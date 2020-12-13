@@ -6,7 +6,7 @@
   <script>
     AFRAME.registerComponent("center", {
       init: function () {
-        this.scale();
+        this.center();
         this.el.addEventListener("object3dset", () => this.center());
       },
       center: function () {
