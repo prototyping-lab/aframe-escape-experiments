@@ -7,9 +7,9 @@
     AFRAME.registerComponent("center", {
       init: function () {
         this.scale();
-        this.el.addEventListener("object3dset", () => this.scale());
+        this.el.addEventListener("object3dset", () => this.center());
       },
-      scale: function () {
+      center: function () {
         const el = this.el;
         const obj = el.object3D;
         const mesh = el.getObject3D("mesh");
