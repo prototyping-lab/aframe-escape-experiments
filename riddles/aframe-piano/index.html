@@ -30,6 +30,36 @@
       <a-assets>
         <a-asset-item id="piano" src="buffet-piano-no-keys.glb"></a-asset-item>
         <a-asset-item id="keys" src="buffet-piano-only-keys.glb"></a-asset-item>
+        <a-asset-item
+          id="do"
+          src="piano-c.mp3"
+          response-type="arraybuffer"
+        ></a-asset-item>
+        <a-asset-item
+          id="re"
+          src="piano-d.mp3"
+          response-type="arraybuffer"
+        ></a-asset-item>
+        <a-asset-item
+          id="mi"
+          src="piano-e.mp3"
+          response-type="arraybuffer"
+        ></a-asset-item>
+        <a-asset-item
+          id="fa"
+          src="piano-f.mp3"
+          response-type="arraybuffer"
+        ></a-asset-item>
+        <a-asset-item
+          id="sol"
+          src="piano-g.mp3"
+          response-type="arraybuffer"
+        ></a-asset-item>
+        <a-asset-item
+          id="la"
+          src="piano-a.mp3"
+          response-type="arraybuffer"
+        ></a-asset-item>
         <a-mixin
           id="piano-key"
           gltf-part="src:#keys"
@@ -38,12 +68,6 @@
           event-set__release="_event:mouseup; position: 0 0 0; sound.src:;"
         >
         </a-mixin>
-        <audio id="do" src="piano-c.mp3" preload="auto"></audio>
-        <audio id="re" src="piano-d.mp3" preload="auto"></audio>
-        <audio id="mi" src="piano-e.mp3" preload="auto"></audio>
-        <audio id="fa" src="piano-f.mp3" preload="auto"></audio>
-        <audio id="sol" src="piano-g.mp3" preload="auto"></audio>
-        <audio id="la" src="piano-a.mp3" preload="auto"></audio>
       </a-assets>
 
       <a-entity id="rig" movement-controls>
